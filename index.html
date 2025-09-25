@@ -234,7 +234,7 @@
                     <div class="flex items-center space-x-4">
                         <img src="pictures/2f068aa4-7aac-4ca9-9097-bcd224bcacd8-enhanced-removebg-preview.png" alt="CryptoLiban Logo" class="h-12 w-12 object-cover rounded-full shadow-lg">
                         <a href="https://www.cryptoliban.com/" target="_blank" class="inline-block">
-                        <span class="text-xl font-bold text-white ml-[-10px]">Domaining.hub</span></a>
+                        <span class="text-xl font-bold text-light-cyan ml-[-10px]">Domaining.hub</span></a>
                     </div>
                 </header>
 
@@ -258,6 +258,11 @@
                             <div class="flex items-center">
                                 <svg class="h-6 w-6 text-pacific-cyan mr-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                 <span class="text-light-cyan text-xl">Flexible payment options</span>
+                            </div>
+                            <!-- Domain Age -->
+                            <div class="flex items-center">
+                                <svg class="h-6 w-6 text-lion mr-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <span class="text-peach text-xl" id="domain-age"></span>
                             </div>
                         </div>
                         <div>
@@ -371,12 +376,50 @@
                 }
             }
 
+             // --- Domain Age Calculation ---
+            const registrationDate = '2025-01-27'; // <-- EDIT THIS DATE FOR NEW DOMAINS
+            const ageElement = document.getElementById('domain-age');
+
+            if (ageElement && registrationDate) {
+                const regDate = new Date(registrationDate);
+                const today = new Date();
+
+                let years = today.getFullYear() - regDate.getFullYear();
+                let months = today.getMonth() - regDate.getMonth();
+                let days = today.getDate() - regDate.getDate();
+
+                if (days < 0) {
+                    months--;
+                    // Get the last day of the previous month for an accurate day count
+                    const lastDayOfPrevMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+                    days += lastDayOfPrevMonth;
+                }
+
+                if (months < 0) {
+                    years--;
+                    months += 12;
+                }
+                
+                const ageParts = [];
+                if (years > 0) {
+                    ageParts.push(years + (years > 1 ? ' years' : ' year'));
+                }
+                if (months > 0) {
+                    ageParts.push(months + (months > 1 ? ' months' : ' month'));
+                }
+                if (days > 0) {
+                    ageParts.push(days + (days > 1 ? ' days' : ' day'));
+                }
+
+                let ageText = 'Age: ' + (ageParts.length > 0 ? ageParts.join(', ') : 'Newly Registered');
+                ageElement.textContent = ageText;
+            }
+
             window.addEventListener('load', matchCardHeights);
             window.addEventListener('resize', matchCardHeights);
         });
     </script>
 </body>
 </html>
-
 
 
